@@ -1,5 +1,5 @@
+  
 <?php
-
 $superheroes = [
   [
       "id" => 1,
@@ -62,11 +62,27 @@ $superheroes = [
       "biography" => "Notably powerful, Wanda Maximoff has fought both against and with the Avengers, attempting to hone her abilities and do what she believes is right to help the world.",
   ], 
 ];
-
+$q =$_GET["q"];
+if (strlen($q) > 0){
+    $result = "<h3 style = 'color : red; font-weight: bold;'>SUPERHERO NOT FOUND</h3>";
+    for ($i = 0 ; $i < count($superheroes); $i++){
+        if ($q === $superheroes[$i]["alias"] || $i === $superheroes[$i]["alias"]){
+            $result = "<h3>".$superheroes[$i]["alias"]."</h3>"."\r\n"."<h4>A.K.A ".$superheroes[$i]["name"]."</h4>"."\r\n"."\r\n"."<p>".$superheroes[$i]["biography"]."/p";
+        }
+    }
+}
+$response = $result;
 ?>
 
+
+<?php if(strlen($response) > 0): ?>
+<?echo $response ?>
+<?php endif; ?>
+
 <ul>
+<?php if(strlen($response) === 0): ?>
 <?php foreach ($superheroes as $superhero): ?>
   <li><?= $superhero['alias']; ?></li>
 <?php endforeach; ?>
+<?php endif; ?>
 </ul>
